@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Contrail+One&display=swap');
+
+.container h1{
+	font-family: 'Contrail One', cursive;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+.header {
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+}
+
+.footertext {
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
+
+.searchbox {
+	min-width: 100%;
+	padding: 20px 10px;
+	line-height: 40px
+}
+
+input[type="text"]{
+	height: 50px;
+	line-height: 100%;
+	font-size: 24px;
+}
+
+/*CSS FOR MAP*/
+
+#mapid {
+	height: 180px; 
+}
