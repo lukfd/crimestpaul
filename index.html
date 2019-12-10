@@ -30,7 +30,6 @@
 
 	<div class="container">
 		<!-- HEADER PAGE -->
-
 		<div class="row">
 			<div class="twelve columns header">
 				
@@ -41,38 +40,98 @@
 				<h1 class="u-pull-left">Crime in St. Paul</h1>
 			</div>
 		</div>
-
+		<div>
+			<div class="row" style="text-align: center">
+				<div class="twelve columns">
+					<h1 style="margin-top: 20px">Search crimes</h1>
+				</div>
+			</div>
+		</div>
 		<!-- BODY PAGE -->
 		<div id="app"> <!-- Vue -->
-			<div class="row">
-				<div class="twelve columns">
-					<label>Search Crimes in St. Paul</label>
-					<input type="text" name="search" class="searchbox" height="50" placeholder="Type a location">
+			<!-- <div class="row">
+				<div class="six columns">
+					<button type="button" class="buttonTop" @click="showMap">DISPLAY IN A MAP</button>
+				</div>
+				<div class="six columns">
+					<button type="button" class="buttonTop" @click="showTable">DISPLAY IN A TABLE</button>
+					
 				</div>
 				<div class="twelve columns">
+					<div style="height: 29px"></div>
+				</div>
+			</div> -->
+			
+			
+			<div class="row">
+				<div class="three columns">
+					<label>Search Crimes in St. Paul</label>
+					<select id="type" v-model="searchType" class="selectBox" @change="changeAddressDiv">
+			            <option v-for="option in searchTypeOptions" :value="option.value">{{ option.text }}</option>
+			        </select>
+				</div>
+
+				<div v-if="!addressDiv">
+					<div class="three columns">
+						<div style="height: 29px"></div>
+						<!-- SEARCH BOX -->
+						<input type="text" height="50" class="searchbox2" v-model="userLat" placeholder="Type a latitude" v-on:keyup.enter="Search">
+					</div>
+					<div class="three columns">
+						<div style="height: 29px"></div>
+						<!-- SEARCH BOX -->
+						<input type="text" height="50" class="searchbox" v-model="userLng" placeholder="Type a longitude" v-on:keyup.enter="Search">
+					</div>				
+				</div>
+
+				<div class="six columns" v-else>
+					<div style="height: 29px"></div>
+					<!-- SEARCH BOX -->
+					<input type="text" height="50" class="searchbox" v-model="inputSearch" placeholder="Type a location" v-on:keyup.enter="Search">
+				</div>
+				<div class="two columns u-pull-right">
+					<div style="height: 29px"></div>
+					<button style="height: 50px" type="button" @click="Search">Enter</button>
+				</div>		
+			</div>
+
+
+			<div class="row">
+				<div class="twelve columns">
+					<div style="margin-top: 40px"></div>
 					<div id="mapid"></div>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="twelve columns">
+					<!-- SEARCH TABLE -->
+					<table style="width:100%">
+					  <thead>
+					    <th>Date</th>
+					    <th>Time</th>
+					    <th>Incident</th>
+					    <th>Neighborhood</th>
+					  </thead>
+					  <tbody>
+					    <td v-for="crime in stpaulcrimes">{{crime.date}}</td>
+					    <td v-for="crime in stpaulcrimes">{{crime.time}}</td>
+					    <td v-for="crime in stpaulcrimes">{{crime.incident}}</td>
+					    <td v-for="crime in stpaulcrimes">{{crime.neighborhood_number}}</td>
+					  </tbody>
+					</table>
+				</div>				
+			</div>
+		
 		</div>
 		<!-- FOOTER PAGE -->
 		<div class="row">
 			<div class="twelve columns footer">
-				<p style="text-align: center">For CISC 375</p>
+				<p>For CISC 375</p>
 			</div>
-		</div>		
+		</div>
+
 	</div>
-
-	<script type="text/javascript">
-		var mymap = L.map('mapid');
-		mymap.setView([51.505, -0.09], 13);
-		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={sk.eyJ1IjoibHVrZmQiLCJhIjoiY2szdGJlcWIxMDE0azNsbno5cHcwZGticSJ9.1OU7HfL9IXMqbZ3F8NbQ1w}', {
-		    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		    maxZoom: 18,
-		    id: 'mapbox/streets-v11',
-		    accessToken: 'sk.eyJ1IjoibHVrZmQiLCJhIjoiY2szdGJlcWIxMDE0azNsbno5cHcwZGticSJ9.1OU7HfL9IXMqbZ3F8NbQ1w'
-		}).addTo(mymap);
-
-	</script>
 
 </body>
 </html>
