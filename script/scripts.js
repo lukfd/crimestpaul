@@ -52,22 +52,34 @@ function Init() {
 	});/*.setView(latlng, 15);*/
 	mymap.setMinZoom(11);
 	mymap.setMaxZoom(18);
-    var southWest = L.latLng(44.949642-0.06, -93.093124+0.18);
-    var northEast = L.latLng(44.949642+0.06, -93.093124-0.18);
+    var southWest = L.latLng(44.888009, -93.208156);
+    var northEast = L.latLng(44.992017, -93.004975);
     var mybounds = L.latLngBounds(southWest, northEast);
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	    bounds: mybounds,
 	    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	}).addTo(mymap);
+	mymap.setMaxBounds(mymap.getBounds());
+
+	// marker
+    var marker = L.marker([44.954445, -93.091301]).addTo(mymap);
+	// latlng in box
+	document.getElementsByName('box')[0].placeholder = new L.LatLng(44.954445, -93.091301);
+	// latlng in box after click
+	mymap.on('click', onMapClick => {
+		marker.setLatLng(onMapClick.latlng);
+		document.getElementsByName('box')[0].placeholder = onMapClick.latlng;
+	});
+	// latlng in box after pan
+	mymap.on("moveend", function() {
+	  document.getElementsByName('box')[0].placeholder = mymap.getCenter().toString();
+	});
 
 	//DATA FOR TABLE
-	let request = {
-        url:'http://localhost:8000/incidents?start_date=2019-10-01&end_date=2019-10-31',
-        dataType: "json",
-        success: this.stpaulcrimes
-	};
-
-    $.ajax(request);
+    $.getJSON('http://localhost:8000/incidents?start_date=2019-10-01&end_date=2019-10-31', (data)=> {
+    	app.stpaulcrimes = data;
+    	console.log(app.stpaulcrimes);
+    });
 }
 
 function Search(event) {
@@ -106,8 +118,8 @@ function Search(event) {
 	}
 
 	if (app.searchType == 'latlong') {
-		if ((app.userLat>=44.949642-0.06 && app.userLat<=44.949642+0.06) 
-			&& (app.userLng>=-93.093124-0.18  && app.userLng<=-93.093124+0.18)) {
+		if ((app.userLat>=44.888027 && app.userLat<=44.992017) 
+			&& (app.userLng>=-93.208156 && app.userLng<=-93.004975)) {
 			latlng = L.latLng(app.userLat, app.userLng);
 			mymap.flyTo(latlng, 18);
 		}
