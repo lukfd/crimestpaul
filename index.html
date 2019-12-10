@@ -87,7 +87,7 @@
 				<div class="six columns" v-else>
 					<div style="height: 29px"></div>
 					<!-- SEARCH BOX -->
-					<input type="text" height="50" class="searchbox" v-model="inputSearch" placeholder="Type a location" v-on:keyup.enter="Search">
+					<input type="text" height="50" name="box" class="searchbox" v-model="inputSearch" placeholder="Type a location" v-on:keyup.enter="Search">
 				</div>
 				<div class="two columns u-pull-right">
 					<div style="height: 29px"></div>
@@ -114,10 +114,12 @@
 					    <th>Neighborhood</th>
 					  </thead>
 					  <tbody>
-					    <td v-for="crime in stpaulcrimes">{{crime.date}}</td>
-					    <td v-for="crime in stpaulcrimes">{{crime.time}}</td>
-					    <td v-for="crime in stpaulcrimes">{{crime.incident}}</td>
-					    <td v-for="crime in stpaulcrimes">{{crime.neighborhood_number}}</td>
+					    <tr v-for="crime in stpaulcrimes">
+					    	<td>{{crime.date}}</td>
+					    	<td>{{crime.time}}</td>
+					    	<td>{{crime.incident}}</td>
+					    	<td>{{crime.neighborhood_number}}</td>
+						</tr>
 					  </tbody>
 					</table>
 				</div>				
